@@ -22,8 +22,26 @@ function App() {
     }
   };
 
+  const saveLocalStorage = () => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  };
+
+  const readLocalStorage = () => {
+    if (localStorage.getItem("todos") === null) {
+      localStorage.setItem("todos", JSON.stringify([]));
+    } else {
+      let todoLocal = JSON.parse(localStorage.getItem("todos"));
+      setTodos(todoLocal);
+    }
+  };
+
+  useEffect(() => {
+    readLocalStorage();
+  }, []);
+
   useEffect(() => {
     filteredHandler();
+    saveLocalStorage();
   }, [todos, status]);
 
   return (
